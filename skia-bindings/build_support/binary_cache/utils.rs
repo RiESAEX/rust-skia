@@ -6,8 +6,10 @@ use ureq::Proxy;
 /// Download a file from the given URL and return the data.
 pub fn download(url: impl AsRef<str>) -> io::Result<Vec<u8>> {
     let resp = if let Ok(proxy) = env::var("https_proxy").or_else(|_| env::var("HTTPS_PROXY")) {
+        println!("{}",&proxy);
         if let Ok(proxy) = Proxy::new(proxy) {
             let agent = ureq::AgentBuilder::new().proxy(proxy).build();
+            println!("proxy")
             agent.get(url.as_ref()).call()
         } else {
             ureq::get(url.as_ref()).call()
