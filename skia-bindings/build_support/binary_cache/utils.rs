@@ -9,7 +9,7 @@ pub fn download(url: impl AsRef<str>) -> io::Result<Vec<u8>> {
         println!("{}",&proxy);
         if let Ok(proxy) = Proxy::new(proxy) {
             let agent = ureq::AgentBuilder::new().proxy(proxy).build();
-            println!("proxy")
+            println!("proxy");
             agent.get(url.as_ref()).call()
         } else {
             ureq::get(url.as_ref()).call()
